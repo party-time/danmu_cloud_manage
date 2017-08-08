@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
 
     <parent>
-        <artifactId>danmu_cloud_system</artifactId>
+        <artifactId>danmu_cloud_manage</artifactId>
         <groupId>cn.party-time</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>

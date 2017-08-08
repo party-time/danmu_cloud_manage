@@ -19,6 +19,7 @@
         <module>danmu_register_eureka</module>
         <module>danmu_config_server</module>
         <module>danmu_log_server_api</module>
+        <module>danmu_project_deploy</module>
     </modules>
 
 
