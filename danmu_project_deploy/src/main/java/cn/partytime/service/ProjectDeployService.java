@@ -77,12 +77,9 @@ public class ProjectDeployService {
                 return;
             }
             /*execShell(executeJavaPullPath);*/
-
             String modifiedArray = String.valueOf(head_commitMap.get("modified"));
             logger.info("modified============>{}",modifiedArray);
-
             List<String> modifiedList = JSON.parseArray(modifiedArray,String.class);
-
             List<String> tempProjectList = getProjectList(modifiedList);
             logger.info("tempProjectList============>{}",JSON.toJSONString(tempProjectList));
 
@@ -103,10 +100,7 @@ public class ProjectDeployService {
                     }
                 }
             }
-
-            System.out.println("============="+JSON.toJSONString(projectSet));
-
-
+            System.out.println("projectSet============="+JSON.toJSONString(projectSet));
             /*executeProject(projectSet);*/
         }
     }
