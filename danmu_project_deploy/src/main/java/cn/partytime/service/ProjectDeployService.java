@@ -76,11 +76,11 @@ public class ProjectDeployService {
                 logger.info("执行更新的命令是:{}",command);
                 return;
             }
-
-
             /*execShell(executeJavaPullPath);*/
 
             String modifiedArray = String.valueOf(head_commitMap.get("modified"));
+            logger.info("modified============>{}",modifiedArray);
+
             List<String> modifiedList = JSON.parseArray(modifiedArray,String.class);
             List<String> tempProjectList = getProjectList(modifiedList);
             Set<String> projectSet = new HashSet<>();
