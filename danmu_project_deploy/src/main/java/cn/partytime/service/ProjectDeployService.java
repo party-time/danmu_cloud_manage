@@ -40,6 +40,9 @@ public class ProjectDeployService {
     @Value("${executeNodePullPath}")
     private String executeNodePullPath;
 
+    @Value("${executeJavaAutoMaven}")
+    private String executeJavaAutoMaven;
+
 
     public void executeDeployNodeServer(HttpServletRequest request) throws Exception{
         String content = getContent(request);
@@ -76,7 +79,10 @@ public class ProjectDeployService {
                 logger.info("执行更新的命令是:{}",command);
                 return;
             }
-            /*execShell(executeJavaPullPath);*/
+
+            logger.info("maven execute:{}",executeJavaPullPath);
+            execShell(executeJavaPullPath);
+
             String modifiedArray = String.valueOf(head_commitMap.get("modified"));
             logger.info("modified============>{}",modifiedArray);
             List<String> modifiedList = JSON.parseArray(modifiedArray,String.class);
@@ -92,27 +98,29 @@ public class ProjectDeployService {
                             //获取项目名称
                             logger.info("strp:============={}",strp);
                             projectSet.add(strp);
-                        }/*else{
+                        }else{
                             String projectName = getDependProject(strp,project);
                             if(!StringUtils.isEmpty(projectName)){
                                 projectSet.add(projectName);
                             }
-                        }*/
+                        }
                     }
                 }
             }
+
+
             logger.info("projectSet============="+JSON.toJSONString(projectSet));
-            /*executeProject(projectSet);*/
+            executeProject(projectSet);
         }
     }
 
     public void executeProject(Set<String> projectSet){
         if(projectSet!=null && projectSet.size()>0){
             //执行脚本
+            logger.info("execute project");
             for(String str:projectSet){
-
+                execShell(executeJavaAutoMaven,str);
                 execShell(executeJavaPath,str);
-
             }
         }
     }
