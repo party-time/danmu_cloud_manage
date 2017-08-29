@@ -78,7 +78,7 @@ public class ProjectDeployService {
             }
 
 
-            /*execShell(executeJavaPullPath);
+            /*execShell(executeJavaPullPath);*/
 
             String modifiedArray = String.valueOf(head_commitMap.get("modified"));
             List<String> modifiedList = JSON.parseArray(modifiedArray,String.class);
@@ -102,7 +102,7 @@ public class ProjectDeployService {
 
             System.out.println("============="+JSON.toJSONString(projectSet));
 
-            executeProject(projectSet);*/
+            /*executeProject(projectSet);*/
         }
     }
 
