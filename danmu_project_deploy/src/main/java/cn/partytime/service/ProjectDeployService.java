@@ -59,8 +59,10 @@ public class ProjectDeployService {
                 return;
             }
 
+            logger.info("maven execute:{}",executeNodePullPath);
             execShell(executeNodePullPath);
 
+            logger.info("maven execute:{}",executeNodePath);
             execShell(executeNodePath);
         }
     }
