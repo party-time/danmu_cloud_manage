@@ -28,7 +28,7 @@ public class DeployController {
     @Autowired
     private ProjectDeployService projectDeployService;
 
-    @RequestMapping(value = "/danmu_system",method = {RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value = "/danmu_cloud_system",method = {RequestMethod.POST,RequestMethod.GET})
     public String danmu_system(HttpServletRequest request) {
         logger.info("客户端屏幕登录");
         try{
@@ -47,7 +47,7 @@ public class DeployController {
             logger.error("",e);
                return "error";
         }
-        return "12312312312321";
+        return "success";
     }
 
 
@@ -70,7 +70,7 @@ public class DeployController {
             logger.error("",e);
             return "error";
         }
-        return "12312312312321";
+        return "success";
     }
 
 

@@ -71,16 +71,14 @@ public class ProjectDeployService {
             String message = String.valueOf(head_commitMap.get("message"));
             logger.info("message=================="+message);
 
-
-
             String command = message.substring(0,message.indexOf("#"));
             if(!DeployConst.DEPLOY_ACTION.equals(command)){
                 logger.info("执行更新的命令是:{}",command);
                 return;
             }
 
-            //执行拉代码
-            execShell(executeJavaPullPath);
+
+            /*execShell(executeJavaPullPath);
 
             String modifiedArray = String.valueOf(head_commitMap.get("modified"));
             List<String> modifiedList = JSON.parseArray(modifiedArray,String.class);
@@ -104,7 +102,7 @@ public class ProjectDeployService {
 
             System.out.println("============="+JSON.toJSONString(projectSet));
 
-            executeProject(projectSet);
+            executeProject(projectSet);*/
         }
     }
 
