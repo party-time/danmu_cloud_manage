@@ -90,13 +90,14 @@ public class ProjectDeployService {
                     for(String project:projects){
                         if(strp.equals(project)){
                             //获取项目名称
+                            logger.info("strp:============={}",strp);
                             projectSet.add(strp);
-                        }else{
+                        }/*else{
                             String projectName = getDependProject(strp,project);
                             if(!StringUtils.isEmpty(projectName)){
                                 projectSet.add(projectName);
                             }
-                        }
+                        }*/
                     }
                 }
             }
