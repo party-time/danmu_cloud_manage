@@ -101,7 +101,7 @@ public class ProjectDeployService {
                     }
                 }
             }
-            System.out.println("projectSet============="+JSON.toJSONString(projectSet));
+            logger.info("projectSet============="+JSON.toJSONString(projectSet));
             /*executeProject(projectSet);*/
         }
     }
