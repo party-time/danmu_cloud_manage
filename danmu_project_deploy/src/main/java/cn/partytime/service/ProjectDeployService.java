@@ -86,6 +86,7 @@ public class ProjectDeployService {
             List<String> tempProjectList = getProjectList(modifiedList);
             logger.info("tempProjectList============>{}",JSON.toJSONString(tempProjectList));
 
+            logger.info("projects============>{}",JSON.toJSONString(projects));
             Set<String> projectSet = new HashSet<>();
             if(tempProjectList!=null && tempProjectList.size()>0){
                 for(String strp:tempProjectList){
@@ -104,6 +105,7 @@ public class ProjectDeployService {
             }
 
             System.out.println("============="+JSON.toJSONString(projectSet));
+
 
             /*executeProject(projectSet);*/
         }
