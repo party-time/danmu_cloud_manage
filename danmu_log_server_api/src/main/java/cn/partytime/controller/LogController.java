@@ -25,11 +25,10 @@ public class LogController {
     @Autowired
     private LogService logService;
 
+
     @RequestMapping(value = "/flash", method = {RequestMethod.GET,RequestMethod.POST})
     public RestResultModel flash(HttpServletRequest request){
         RestResultModel restResultModel = new RestResultModel();
-        //System.out.println("addressId:"+addressId+"; param:"+param);
-
         logService.appendLogToFile(1, request.getParameter("addressId"),request.getParameter("param"));
         return restResultModel;
     }
@@ -37,7 +36,6 @@ public class LogController {
     @RequestMapping(value = "/java", method = {RequestMethod.GET,RequestMethod.POST})
     public RestResultModel javalog(HttpServletRequest request){
         RestResultModel restResultModel = new RestResultModel();
-        logger.info("======================java log");
         logService.appendLogToFile(0, request.getParameter("addressId"),request.getParameter("param"));
         return restResultModel;
     }
