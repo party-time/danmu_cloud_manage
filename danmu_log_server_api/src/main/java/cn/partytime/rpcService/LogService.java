@@ -1,11 +1,14 @@
 package cn.partytime.rpcService;
 
+import cn.partytime.config.EnvConfig;
 import cn.partytime.controller.LogController;
 import cn.partytime.util.DateUtils;
 import cn.partytime.util.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -19,9 +22,9 @@ public class LogService {
 
     private static final Logger logger = LoggerFactory.getLogger(LogController.class);
 
-    @Value("${client.logDirectory}")
-    private String logDirectory;
 
+    @Autowired
+    private EnvConfig envConfig;
 
     public void appendLogToFile(int type,String addressId,String param){
 
@@ -35,12 +38,11 @@ public class LogService {
        }else{
            typeStr="flashlog";
         }
-       String filePath = logDirectory+File.separator+typeStr+File.separator+directoryName;
+       String filePath = envConfig.getLogPath()+File.separator+typeStr+File.separator+directoryName;
        File file = new File(filePath);
        if(!file.exists()){
            file.mkdirs();
        }
-
        String fileName = filePath+File.separator+addressId;
         logger.info("======================param:"+param);
        StringBuffer stringBuffer  = new StringBuffer();
