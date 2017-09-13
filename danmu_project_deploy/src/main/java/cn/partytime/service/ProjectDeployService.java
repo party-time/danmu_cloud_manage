@@ -121,8 +121,14 @@ public class ProjectDeployService {
             //执行脚本
             logger.info("execute project");
             for(String str:projectSet){
-                execShell(executeJavaAutoMaven,str);
-                execShell(executeJavaPath,str);
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        execShell(executeJavaAutoMaven,str);
+                        execShell(executeJavaPath,str);
+                    }
+                }).start();
             }
         }
     }
