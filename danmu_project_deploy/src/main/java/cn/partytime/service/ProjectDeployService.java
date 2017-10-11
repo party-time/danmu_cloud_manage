@@ -117,7 +117,9 @@ public class ProjectDeployService {
     }
 
     public void executeProject(Set<String> projectSet){
-        if(projectSet!=null && projectSet.size()>0){
+
+        logger.info("projectSet size is:{}",projectSet.size());
+        /*if(projectSet!=null && projectSet.size()>0){
             //执行脚本
             logger.info("execute project");
             for(String str:projectSet){
@@ -130,7 +132,7 @@ public class ProjectDeployService {
                     }
                 }).start();
             }
-        }
+        }*/
     }
 
 
