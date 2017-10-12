@@ -43,6 +43,9 @@ public class ProjectDeployService {
     @Value("${executeJavaAutoMaven}")
     private String executeJavaAutoMaven;
 
+    @Value("${executeJavaAutoAllMaven}")
+    private String executeJavaAutoAllMaven;
+
 
     public void executeDeployNodeServer(HttpServletRequest request) throws Exception{
         String content = getContent(request);
@@ -109,8 +112,6 @@ public class ProjectDeployService {
                     }
                 }
             }
-
-
             logger.info("projectSet============="+JSON.toJSONString(projectSet));
             executeProject(projectSet);
         }
@@ -119,6 +120,33 @@ public class ProjectDeployService {
     public void executeProject(Set<String> projectSet){
 
         logger.info("projectSet size is:{}",projectSet.size());
+        if(projectSet!=null && projectSet.size()>0){
+            int projectSize = projectSet.size();
+            if(projectSize>1){
+                execShell(executeJavaAutoAllMaven);
+                for(String str:projectSet){
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            execShell(executeJavaPath,str);
+                        }
+                    }).start();
+                }
+            }else{
+                for(String str:projectSet){
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            execShell(executeJavaAutoMaven,str);
+                            execShell(executeJavaPath,str);
+                        }
+                    }).start();
+                }
+            }
+
+        }
+
+
         /*if(projectSet!=null && projectSet.size()>0){
             //执行脚本
             logger.info("execute project");
