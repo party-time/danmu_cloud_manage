@@ -1,4 +1,4 @@
-package cn.partytime.rpcService;
+package cn.partytime.service;
 
 import cn.partytime.config.EnvConfig;
 import cn.partytime.controller.LogController;
