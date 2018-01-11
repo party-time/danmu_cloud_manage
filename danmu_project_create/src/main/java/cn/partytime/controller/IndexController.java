@@ -21,4 +21,10 @@ public class IndexController {
     public String main() {
         return "main";
     }
+
+    @RequestMapping(value = "/table", method = RequestMethod.GET)
+    public String table() {
+        return "table";
+    }
+
 }

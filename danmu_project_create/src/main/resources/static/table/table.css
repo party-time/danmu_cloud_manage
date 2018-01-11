@@ -1,0 +1,60 @@
+table{
+	width:100%;
+	border-collapse:collapse;
+}
+tr{
+	background-color: #fff;
+	box-shadow: 10px 10px 10px rgba(0, 0, 0, .3);
+}
+
+th{
+	 border: #CCCCCC  solid 1px;
+}
+
+td{
+	 border: #CCCCCC  solid 1px;
+	 line-height:30px;
+}
+
+.page{
+	margin-top:15px;
+	float:right;
+	padding-right:5px;
+	font-size:8pt;
+}
+.firstPage{
+	padding-top:2px;
+	padding-left:2px;
+	padding-bottom:2px;
+	padding-right:2px;
+	border: red  solid 1px;
+}
+.prePage{
+	padding-top:2px;
+	padding-left:2px;
+	padding-bottom:2px;
+	padding-right:2px;
+	margin-left:10px;
+	border: red  solid 1px;
+}
+.nextPage{
+	padding-top:2px;
+	padding-left:2px;
+	padding-bottom:2px;
+	padding-right:2px;
+	margin-left:10px;
+	border: red  solid 1px;
+}
+
+.lastPage{
+	padding-top:2px;
+	padding-left:2px;
+	padding-bottom:2px;
+	padding-right:2px;
+	margin-left:10px;
+	border: red  solid 1px;
+}
+
+.disabled{
+	border: blue  solid 1px;
+}
