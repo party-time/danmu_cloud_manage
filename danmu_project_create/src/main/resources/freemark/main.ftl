@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head lang="zh-cn">
   <meta charset="utf-8">
@@ -38,9 +38,6 @@
 	
 </body>
 <script src="/plug/jquery/jquery.min.js"></script>
-<script src="/plug/react/react.min.js"></script>
-<script src="/plug/react/react-dom.min.js"></script>
-<script src="/plug/react/babel.min.js"></script>
 
 <link rel="stylesheet" href="/static/main/main.css">
 </html>

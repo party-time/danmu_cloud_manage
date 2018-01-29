@@ -1,33 +1,3 @@
-var TableTr =  React.createClass({
-	render : function(){
-		//var object = {};
-		var options = [];
-		for (var key in this.props.content){
-			  //console.log(key+'=============='+this.props.content[key]);
-			  //eval("object." + key + "='" + this.props.content[key] + "'"); 
-			  options.push(<td>{this.props.content[key]}</td>)
-		}
-	
-		return	<tr>
-					{options}
-				</tr>
-	}
-});
-
-
-/*function initTable(tableData){
-	var TableTag = React.createClass({
-		render : function(){
-			var options = [];
-			for (var i=0; i<this.props.tableData; i++) {
-				options.push(<TableTr content={this.props.tableData[i].name}/>)
-			};
-			return	<table>
-						{options}
-					</table>
-		}
-	});
-}*/
 var TableHead = React.createClass({
 	render : function(){
 		//var object = {};
@@ -41,71 +11,183 @@ var TableHead = React.createClass({
 				</tr>
 	}
 });
-var PageTag =  React.createClass({
-	getInitialState: function () {
-		return { 
-			page: 1,
-			addClass:'disabled'
-		};
+
+var TableTd = React.createClass({
+	render : function(){
+		var options = [];
+		for (var key in this.props.content){
+			  options.push(<td>{this.props.content[key]}</td>)
+		}
+		return	<tr>
+					{options}
+				</tr>
+	}
+});
+var TableTr =  React.createClass({
+	render : function(){
+		//console.log('pageType:======='+this.props.pageType)
+		//console.log('pageSize:======='+this.props.pageSize)
+		//console.log('page:======='+this.props.page)
+		//var object = {};
+		var page = this.props.page;
+		if(this.props.content!=null && this.props.content.length>0){
+			var rows=[];
+			var sum = this.props.content.length;
+			if(this.props.pageType){
+				var pageSize = this.props.pageSize;
+				var index = (page-1)*pageSize;
+				var length =(index + pageSize > sum ?sum:index + pageSize)
+				for(var i=index; i<length; i++){
+					rows.push(<TableTd content={this.props.content[i]}/>);
+				}
+			}else{
+				for(var i=0; i<sum; i++){
+					rows.push(<TableTd content={this.props.content[i]}/>);
+				}
+			}
+			return	<tbody>
+						{rows}
+					</tbody>
+		}
+		return	<tr>
+					<td>{"没有数据"}</td>
+				</tr>
+	}
+});
+
+var TagbleTag = React.createClass({
+	getInitialState: function() {
+	  return {
+		url: this.props.url,
+		page: 1,
+		title:this.props.title,
+		rows:[],
+		pageType:false,
+		pageSize:10,
+		totalPage:0
+	  };
+	},
+	componentWillMount:function(){
+		console.log('componentWillMount');
+	},
+	componentDidMount: function() {
+		$.get(this.props.url, function (result) {
+			//console.log(this.props.source);
+			console.log(result);
+			/*var lastGist = result[0];*/
+			var total =0;
+			var sum = result.length;
+			var pageSize = this.state.pageSize;
+			if(parseInt(sum%pageSize)==0){
+				total = parseInt(sum / pageSize);
+			}else{
+				total = parseInt(sum / pageSize) + 1;
+			}
+			this.setState({
+				rows:result,
+				sum:result.length,
+				totalPage:total
+			})
+			console.log('+++++++++++++++'+this.state.rows);
+		}.bind(this));
+	},
+	componentWillReceiveProps:function(){
+		console.log('componentDidMount');
+	},
+	componentWillUpdate:function(){
+		//console.log('componentWillUpdate');
+	},
+	componentDidUpdate :function(){
+		//console.log('componentDidUpdate');
+		//设置page标签状态
+		this.pageButtonState();
+	},
+	componentWillReceiveProps:function(){
+		//console.log('componentWillReceiveProps');
+	},
+	componentWillUnmount: function() {
+	  this.serverRequest.abort();
 	},
 	firstPageClick: function () {	
 		this.setState(function(state) {
 		  return {page: 1};
 		});
+		//console.log(this.state.page+"------"+this.state.lastGistUrl);
 	},
 	prePageClick: function () {
 		this.setState(function(state) {
-		  return {page: state.page - 1};
+		  return {page: state.page>1?state.page-1:1};
 		});
+		///console.log(this.state.page+"------"+this.state.lastGistUrl);
 	},
 	nextPageClick: function () {
-		this.setState(function(state) {
-			return {page: state.page + 1};
+		this.setState(function(state) {  
+			return {
+				page: state.page + 1
+			};
 		});
+		//console.log(this.state.page+"------"+this.state.lastGistUrl);
 	},
 	lastPageClick: function () {
 		this.setState(function(state) {
-		  return {page: 100};
+		  return {page: this.state.totalPage};
 		});
+		//console.log(this.state.page+"------"+this.state.lastGistUrl);
 	},
-	render : function(){
-		return <div className="page">
-					<span className="firstPage"  onClick={this.firstPageClick}>首页</span>
-					<span className="prePage" onClick={this.prePageClick}>&lt;上一页</span>
-					<span className="nextPage" onClick={this.nextPageClick}>下一页&gt;</span>
-					<span className="lastPage" onClick={this.lastPageClick}>末页</span>
+	pageButtonState:function(){
+		if(this.state.page==1 && this.state.totalPage==1){
+			$(".firstPage").addClass("disabled").attr("disabled", true) ;
+			$(".prePage").addClass("disabled").attr("disabled", true);
+			$(".nextPage").addClass("disabled").attr("disabled", true);
+			$(".lastPage").addClass("disabled").attr("disabled", true);
+		}else if(this.state.page==1){
+			$(".firstPage").addClass("disabled").attr("disabled", true);
+			$(".prePage").addClass("disabled").attr("disabled", true);
+			$(".nextPage").removeClass("disabled").removeAttr("disabled");
+			$(".lastPage").removeClass("disabled").removeAttr("disabled");
+		}else if(this.state.page == this.state.totalPage){
+			$(".firstPage").removeClass("disabled").removeAttr("disabled");
+			$(".prePage").removeClass("disabled").removeAttr("disabled");
+			$(".nextPage").addClass("disabled").attr("disabled", true);
+			$(".lastPage").addClass("disabled").attr("disabled", true);
+		}else{
+			$(".firstPage").removeClass("disabled").removeAttr("disabled");
+			$(".prePage").removeClass("disabled").removeAttr("disabled");
+			$(".nextPage").removeClass("disabled").removeAttr("disabled");
+			$(".lastPage").removeClass("disabled").removeAttr("disabled");
+		}
+	},
+	render: function() {
+	  return (
+			<div>
+				<table>
+					<TableHead title={this.state.title}/>
+					<TableTr content={this.state.rows}  pageType={this.state.pageType} pageSize={this.state.pageSize} page={this.state.page}/>
+				</table>
+				<div className="page">
+					<button className="firstPage"  onClick={this.firstPageClick}>首页</button>
+					<button className="prePage" onClick={this.prePageClick}>&lt;上一页</button>
+					<span>第{this.state.page}页</span>
+					<button className="nextPage" onClick={this.nextPageClick}>下一页&gt;</button>
+					<button className="lastPage" onClick={this.lastPageClick}>末页</button>
 				</div>
+			</div>
+	  );
 	}
 });
 
-function initTable(tableData,title){
-	var options = [];
-	for (var i=0; i<tableData.length; i++) {
-		options.push(<TableTr content={tableData[i]}/>)
-	};
-	
-	return	<div>
-				<table>
-					<TableHead title={title}/>
-					{options}
-				</table>
-				<PageTag/>
-			</div>
-
-}
 
 
-function init(){
+var init =function(){
 	var title= [
 		{field: 'id',title: '编号',align: 'center'},
 		{field: 'name',title: '名称',align: 'center'},
 		{field: 'value',title: '值',align: 'center'},
 	];
-	var table = [
-		{name:'1111',value:'2222','id':'22222'},
-		{name:'2222',value:'2222','id':'22222'},
-		{name:'3333',value:'2222','id':'22222'}
-	]
-	ReactDOM.render(initTable(table,title),document.getElementById('main'));
+	ReactDOM.render(
+		<TagbleTag url="http://localhost/static/table/tablejson.json" title={title}/>,
+		document.getElementById('main')
+	);
 }
+
 init();
