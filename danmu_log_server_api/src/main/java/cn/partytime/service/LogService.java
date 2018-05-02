@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.util.Date;
 
 /**
  * Created by Administrator on 2017/3/18 0018.
@@ -28,9 +29,10 @@ public class LogService {
 
     public void appendLogToFile(int type,String addressId,String param){
 
-
-       String directoryName = DateUtils.dateToString(DateUtils.getCurrentDate(),"yyyy-MM-dd");
-       String dateStr = DateUtils.dateToString(DateUtils.getCurrentDate(),"yyyy-MM-dd HH:mm:ss");
+        Date currentDate = DateUtils.getCurrentDate();
+       String directoryName = DateUtils.dateToString(currentDate,"yyyy-MM-dd");
+       String dateStr = DateUtils.dateToString(currentDate,"yyyy-MM-dd HH:mm:ss");
+       int hours = currentDate.getHours();
 
        String typeStr = "";
        if(type==0){
@@ -38,7 +40,8 @@ public class LogService {
        }else{
            typeStr="flashlog";
         }
-       String filePath = envConfig.getLogPath()+File.separator+typeStr+File.separator+directoryName;
+
+       String filePath = envConfig.getLogPath()+File.separator+typeStr+File.separator+directoryName+File.separator+hours;
        File file = new File(filePath);
        if(!file.exists()){
            file.mkdirs();
