@@ -122,8 +122,8 @@ public class ProjectDeployService {
         logger.info("projectSet size is:{}",projectSet.size());
         if(projectSet!=null && projectSet.size()>0){
             int projectSize = projectSet.size();
+            execShell(executeJavaAutoAllMaven);
             if(projectSize>1){
-                execShell(executeJavaAutoAllMaven);
                 for(String str:projectSet){
                     new Thread(new Runnable() {
                         @Override
@@ -137,7 +137,7 @@ public class ProjectDeployService {
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            execShell(executeJavaAutoMaven,str);
+                            //execShell(executeJavaAutoMaven,str);
                             execShell(executeJavaPath,str);
                         }
                     }).start();
